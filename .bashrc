@@ -1,8 +1,4 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
-# Automatically Shows Current Git Branch
+##### Shows Current Git Branch for PS1
 parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
@@ -61,6 +57,7 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+##### This PS1 has a different color theme and makes the terminal prompt end in a blinking ~⛧ instead of the standard $ symbol
 if [ "$color_prompt" = yes ]; then
 	PS1="\[\033[34m\]\u@\h \[\033[94m\]\w\[\033[35m\]\$(parse_git_branch)\[\033[5;94m\]~⛧  \[\033[0m\]"
 else
@@ -68,7 +65,8 @@ else
 fi
 unset color_prompt force_color_prompt
 
-export PS2=" ✧ > "
+##### Changes the prompt qwhen using backslashes from the standard > symbol to whatever the PS2 is
+PS2=" ✧ > "
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -123,35 +121,35 @@ fi
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
 
-### > > > Aliases > > >
+### > > > Fun Aliases > > >
 
 alias train="sl"
 alias lc="lolcat"
 
 ### > > > Fun Rainbow Commands > > >
-
+# The results of one rainbow command do not automatically pipe into another. Make sure to use the rainbow command last when piping bash commands together.
+# Ex.: `history | grepl` "git" will work but `historyl | grep` will not output rainbow colors.
 # To make sure that other programs that might use these basic commands don't start doing anything irregular, the names for these where slightly changed.
-# New Prettier Rainbow Commands:
+
+# Rainbow Commands with Lolcat:
 
 lss(){ echo -e; ls -la | lc; echo -e; }
 ll(){ echo -e; ls | lc; echo -e; }
 pwdl(){ pwd | lc; echo -e; }
 historyl(){ echo -e; history | lc; echo -e; }
 grepl(){ echo -e; grep "$1" | lc; echo -e; }
-cdl(){ echo -e; cd "$1"; ll; echo -e; }
+cdl(){ cd "$1"; ll; }
 catl(){ echo -e; cat | lc; echo -e; }
 taill(){ echo -e; tail | lc; echo -e; }
 
-# The results of one rainbow command do not automatically pipe into another. Make sure to use the rainbow command last when piping bash commands together.
-# Ex.: `history | grepl` "git" will work but `historyl | grep` will not output rainbow colors.
+# Rainbow Commands with rnbw:
 
 rnbw(){ xargs -I % sh -c 'echo " \e[5m % \e[0m"| lolcat '; }
 
-lld(){ echo -e; ls | rnbw; echo -e; }
 lsd(){ echo -e; ls -la | rnbw; echo -e; }
 pwdd(){ echo -e; pwd | rnbw; echo -e; }
 historyd(){ echo -e; history | rnbw; echo -e; }
-grepd(){ echo -e; grep | rnbw; echo -e; }
-cdd(){ echo -e; cd "$1"; lld; echo -e; }
-catd(){ echo -e; cat | rnbw; echo -e; }
+grepd(){ echo -e; grep "$1" | rnbw; echo -e; }
+cdd(){ cd "$1"; lld; }
+catd(){ echo -e; cat | rnbw; echo -e; }i
 taild(){ echo -e; tail | rnbw; echo -e; }
