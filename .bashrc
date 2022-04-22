@@ -62,11 +62,13 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-	PS1="\[\033[34m\]\u@\h \[\033[94m\]\w\[\033[35m\]\$(parse_git_branch)\[\033[0m\] \$ "
+	PS1="\[\033[34m\]\u@\h \[\033[94m\]\w\[\033[35m\]\$(parse_git_branch)\[\033[5;94m\]~⛧  \[\033[0m\]"
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
+
+export PS2=" ✧ > "
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -136,9 +138,20 @@ ll(){ echo -e; ls | lc; echo -e; }
 pwdl(){ pwd | lc; echo -e; }
 historyl(){ echo -e; history | lc; echo -e; }
 grepl(){ echo -e; grep "$1" | lc; echo -e; }
-cdl(){ cd "$1"; ll; }
-
-alias cdd="cdl"
+cdl(){ echo -e; cd "$1"; ll; echo -e; }
+catl(){ echo -e; cat | lc; echo -e; }
+taill(){ echo -e; tail | lc; echo -e; }
 
 # The results of one rainbow command do not automatically pipe into another. Make sure to use the rainbow command last when piping bash commands together.
 # Ex.: `history | grepl` "git" will work but `historyl | grep` will not output rainbow colors.
+
+rnbw(){ xargs -I % sh -c 'echo " \e[5m % \e[0m"| lolcat '; }
+
+lld(){ echo -e; ls | rnbw; echo -e; }
+lsd(){ echo -e; ls -la | rnbw; echo -e; }
+pwdd(){ echo -e; pwd | rnbw; echo -e; }
+historyd(){ echo -e; history | rnbw; echo -e; }
+grepd(){ echo -e; grep | rnbw; echo -e; }
+cdd(){ echo -e; cd "$1"; lld; echo -e; }
+catd(){ echo -e; cat | rnbw; echo -e; }
+taild(){ echo -e; tail | rnbw; echo -e; }
