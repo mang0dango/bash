@@ -127,6 +127,8 @@ fi
 
 alias train="sl"
 alias lc="lolcat"
+alias got="git $1"
+alias logs="log" 
 
 ### > > > Fun Rainbow Commands > > >
 
@@ -138,9 +140,10 @@ ll(){ echo -e; ls | lc; echo -e; }
 pwdl(){ pwd | lc; echo -e; }
 historyl(){ echo -e; history | lc; echo -e; }
 grepl(){ echo -e; grep "$1" | lc; echo -e; }
-cdl(){ echo -e; cd "$1"; ll; echo -e; }
+cdl(){ cd "$1"; ll; }
 catl(){ echo -e; cat | lc; echo -e; }
 taill(){ echo -e; tail | lc; echo -e; }
+emp(){ echo "" > $1; echo "file was emptied" | lc; }
 
 # The results of one rainbow command do not automatically pipe into another. Make sure to use the rainbow command last when piping bash commands together.
 # Ex.: `history | grepl` "git" will work but `historyl | grep` will not output rainbow colors.
@@ -152,6 +155,6 @@ lsd(){ echo -e; ls -la | rnbw; echo -e; }
 pwdd(){ echo -e; pwd | rnbw; echo -e; }
 historyd(){ echo -e; history | rnbw; echo -e; }
 grepd(){ echo -e; grep | rnbw; echo -e; }
-cdd(){ echo -e; cd "$1"; lld; echo -e; }
+cdd(){ cd "$1"; lld; }
 catd(){ echo -e; cat | rnbw; echo -e; }
 taild(){ echo -e; tail | rnbw; echo -e; }
