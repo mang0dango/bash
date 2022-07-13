@@ -128,13 +128,16 @@ fi
 alias train="sl"
 alias lc="lolcat"
 alias got="git $1"
-alias logs="log" 
+alias logs="log"
+alias ckeckout="checkout"
 
 ### > > > Fun Rainbow Commands > > >
 
 # To make sure that other programs that might use these basic commands don't start doing anything irregular, the names for these where slightly changed.
 # New Prettier Rainbow Commands:
 
+
+jfrog() { echo -e; portunus -b jfrog && . ~/.jfrog-env; echo "Successully authenticated with Jfrog!" | lc; echo -e; }
 lss(){ echo -e; ls -la | lc; echo -e; }
 ll(){ echo -e; ls | lc; echo -e; }
 pwdl(){ pwd | lc; echo -e; }
@@ -143,7 +146,8 @@ grepl(){ echo -e; grep "$1" | lc; echo -e; }
 cdl(){ cd "$1"; ll; }
 catl(){ echo -e; cat | lc; echo -e; }
 taill(){ echo -e; tail | lc; echo -e; }
-emp(){ echo "" > $1; echo "file was emptied" | lc; }
+empty(){ echo "" > $1; echo "file was emptied" | lc; }
+headl(){ echo -e; head $1|lc; echo -e;}
 
 # The results of one rainbow command do not automatically pipe into another. Make sure to use the rainbow command last when piping bash commands together.
 # Ex.: `history | grepl` "git" will work but `historyl | grep` will not output rainbow colors.
@@ -158,3 +162,14 @@ grepd(){ echo -e; grep | rnbw; echo -e; }
 cdd(){ cd "$1"; lld; }
 catd(){ echo -e; cat | rnbw; echo -e; }
 taild(){ echo -e; tail | rnbw; echo -e; }
+headd(){ echo -e; head $1 | rnbw; echo -e; }
+
+commit(){
+   echo -e
+   git status
+   echo -e
+   git add --a && echo -n  "commit message: "
+   read
+   git commit -m "$REPLY" | rnbw && git push | rnbw
+   echo -e
+}
